@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "elogger"
+version = "0.7.0"
+authors = [
+    { name="ixenion", email="stridjj@gmail.com" },
+]
+description = "Extended loguru library"
+readme = "README.md"
+license = {text = "GPL-2.0-or-later"}
+classifiers = [
+    "Operating System :: OS Independent",
+]
+
+requires-python = ">=3.10"
+dependencies = [
+    "loguru>=0.7.2",
+]
+
+# [project.optional-dependencies]
+# fastcrc = [
+#     "libscrc>=1.8.0",
+# ]
+
+[project.urls]
+"Homepage" = "https://github.com/ixenion/elogger"
+"Bug Tracker" = "https://github.com/ixenion/elogger/issues"
+
+# pytest staff
+[tool.pytest.ini_options]
+# "function", "class", "module", "package", "session"
+asyncio_default_fixture_loop_scope = "package"

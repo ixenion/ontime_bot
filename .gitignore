@@ -1,0 +1,25 @@
+#   - Ignore all files of a type: *.log.
+*.log
+logs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+env/
+venv/
+venv*/
+ENV/
+env.bak/
+venv.bak/
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore database volumes
+*volume

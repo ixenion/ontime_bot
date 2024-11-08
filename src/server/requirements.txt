@@ -1,0 +1,6 @@
+aiopg==1.4.0
+async-timeout==4.0.3
+# Editable Git install with no remote (elogger==0.7.0)
+-e ./utils/elogger
+loguru==0.7.2
+psycopg2-binary==2.9.10

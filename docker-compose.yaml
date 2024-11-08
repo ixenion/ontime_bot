@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+
+  # The service is named server, which identifies it within the
+  # Docker Compose application and the network.
+  ontime_bot_server:
+    # This option sets the name of the container to "server".
+    # It allows for easier identification of the container when
+    # managing it (e.g., starting, stopping, or viewing logs).
+    container_name: ontime_bot_server
+    build:
+      # The context specifies where Docker should look for
+      # the files needed to build the image (Dockerfile etc).
+      context: ./src/server/
+      # This specifies that Docker should use the Dockerfile
+      # located in the "context" directory to build the image.
+      dockerfile: Dockerfile
+    # This instructs Docker Compose to load environment variables
+    # from the .env file located in the same directory as the
+    # docker-compose.yaml.
+    env_file: .env
+    environment:
+      # Setting this to 0 prevents Python from buffering stdout and stderr,
+      # which means logs can be viewed immediately.
+      # (Typically, it is set to 1 to enable unbuffered output.)
+      - PYTHONUNBUFFERED=0
+      # This variable tells Python where to look for modules when importing.
+      # In this case, /app is added to the Python path.
+      - PYTHONPATH=/app
+      #  This could control debug mode for the application; commonly used
+      # in web frameworks.
+      - DEBUG=False
+      # Set the hostname to connect to the database.
+      - POSTGRES_HOST=ontime_bot_db
+    # Indicates that the service should restart automatically under
+    # certain conditions (e.g., if it crashes).
+    restart: always
+    # This specifies the command to run when the container starts.
+    # The working dir would be /app for container
+    # (here it is - src/server which contains main.py)
+    command: python3.12 main.py
+    # Port Mapping: This line maps port 8000 on the host machine to
+    # port SERVER_PORT on the Docker container. The container listens
+    # on the specified port (defaulting to 8000), allowing external
+    # access through the specified port.
+
+    # ports:
+      # - '8000:${SERVER_PORT:-8000}'
+      #
+      # To enable communication between two Docker containers,
+      # (core - server and database) not necessarily to map the
+      # ports to the host machine. Instead, one can use Docker's internal
+      # networking. Docker Compose automatically sets up a bridge network
+      # and allows containers to communicate with each other using their
+      # service names as hostnames. Check 'environment' - 'POSTGRES_HOST'
+
+    # This mounts the ./src/server directory from the host machine to
+    # the /app directory within the container. This setup
+    # allows changes made to the code on the host to be reflected
+    # inside the container without the need to rebuild the image,
+    # which is useful for development.
+    # volumes:
+      # Common dir for scripts etc
+      # If using bind mount - .dockerignore will be ignored itself :)
+      # - ./src/server:/app
+
+    # This indicates that the server service depends on another services.
+    # Docker Compose will wait until the depends services is up before
+    # starting this service.
+    depends_on:
+      - ontime_bot_db
+
+
+  ontime_bot_db:
+    container_name: ontime_bot_db
+    build:
+      # The context specifies where Docker should look for
+      # the files needed to build the image (Dockerfile etc).
+      context: ./src/database/
+      # This specifies that Docker should use the Dockerfile
+      # located in the "context" directory to build the image.
+      dockerfile: Dockerfile
+    restart: always
+    # This maps port 5432 of the host machine to port 5432 of the
+    # container. PostgreSQL's default port is 5432, so this allows
+    # external access to the database service running inside the container.
+    ports:
+      - '5432:${POSTGRES_PORT:-5432}'
+    volumes:
+      - ./database_volume/data:/var/lib/postgresql/data
+    # This instructs Docker Compose to load environment variables
+    # from the .env file located in the same directory as the
+    # docker-compose.yaml.
+    env_file: .env

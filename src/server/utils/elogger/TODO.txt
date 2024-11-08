@@ -1,0 +1,12 @@
+1.  Make decorators like
+    @logger.main.info
+    def foo() -> Any:
+        ...
+
+    To log Callable output
+
+
+2. Make logger module change level on the fly (both .log and stdout).
+
+
+3. Make proper tests for stdout.
