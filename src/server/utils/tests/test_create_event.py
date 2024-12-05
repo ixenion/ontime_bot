@@ -1,4 +1,4 @@
-from src.server.utils.database_api.create_event import CreateEvent
+from src.server.utils.database_api.event_service import EventService
 import pytest
 
 
@@ -8,7 +8,7 @@ async def test_create_event():
     event_time = "12.11.2024 18:30:00"
     message = "Test event from external script"
 
-    event_creator = CreateEvent(db_name="events", db_user="postgres", db_pass="password", db_host="localhost", db_port="5432")
+    event_creator = EventService(db_name="events", db_user="postgres", db_pass="password", db_host="localhost", db_port="5432")
 
     result = await event_creator.create_event(user_id, message, event_time)
 

@@ -1,8 +1,9 @@
 from .base      import APIInterface
 from .demo      import APIDemo
+from .event_service import EventService
 
 
-class Database(APIDemo):
+class Database(EventService):
     """
         Main class which combines all database APIs.
     """
