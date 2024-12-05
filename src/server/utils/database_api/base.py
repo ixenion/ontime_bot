@@ -4,9 +4,9 @@
 import asyncio
 import os
 from pathlib        import Path
-from time           import time
-from typing         import Self, Any
-from types          import TracebackType
+from time import time
+from typing import Self, Any
+from types import TracebackType
 
 
 # ------------------- #
@@ -14,22 +14,13 @@ from types          import TracebackType
 
 import aiopg
 import psycopg2
-from psycopg2.extras    import DictCursor, RealDictCursor, RealDictRow
+from psycopg2.extras import DictCursor, RealDictCursor, RealDictRow
 
 
 # ------------- #
 # Local imports #
 
-
-
-###########
-# CLASSES #
-###########
-
-
 class APIInterface:
-
-
     def __init__(self,
                  db_name:str|None=None,
                  db_user:str|None=None,
@@ -42,7 +33,7 @@ class APIInterface:
             Parameters:
 
             : db_name - Name of the database to connect to. Example: "myDB";
-            : db_user - User whihc has access to the DB. Example: "user";
+            : db_user - User which has access to the DB. Example: "user";
             : db_pass - User password;
             : db_host - Host (or IP addr) of the DB. Example: "localhost";
             : db_port - Port of the DB. Example: "5432".
@@ -59,7 +50,7 @@ class APIInterface:
         self.DSN = f'dbname={self.DB_NAME} user={self.DB_USER} password={self.DB_PASS} host={self.DB_HOST}'
 
 
-    async def query(self, query:str) -> list[RealDictRow]|None:
+    async def query(self, query:str) -> list[RealDictRow] | None:
         async with aiopg.connect(self.DSN) as con:
             async with con.cursor(
                     cursor_factory=RealDictCursor) as cursor:
