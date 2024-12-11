@@ -130,3 +130,23 @@ class EventService(APIInterface):
         except Exception as e:
             print(f"Error while deleting event: {e}")
             return False
+
+    async def get_event_by_time(self, user_id: int, event_time: str) -> list[RealDictRow] | None:
+        """
+        Get all events witch should be sent by exact time.
+
+            Parameters:
+            :param user_id: ID of the user.
+            :param event_time: Time of the event.
+
+            Returns:
+            :return: The list of events or None.
+        """
+        try:
+            cmd = f"SELECT * FROM Events WHERE user_id = {user_id} AND event_time = '{event_time}' AND is_sent = FALSE;"
+            result = await self.query(cmd)
+            return result if result else None
+        except Exception as e:
+            print(f"Error while getting event: {e}")
+
+
