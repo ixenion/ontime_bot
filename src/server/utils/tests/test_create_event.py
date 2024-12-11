@@ -4,7 +4,7 @@ import pytest
 
 @pytest.mark.asyncio
 async def test_create_event():
-    user_id = 1234567
+    user_id = 12345
     event_time = "12.11.2024 18:30:00"
     message = "Test event from external script"
 
