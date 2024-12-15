@@ -27,7 +27,3 @@ CREATE TABLE events (
     is_deleted BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-INSERT INTO users (username, chat_id) VALUES
-('HitrayaPechenka', '12345'),
-('SomeoneElse', '67890');
