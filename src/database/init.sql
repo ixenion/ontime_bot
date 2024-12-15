@@ -29,5 +29,4 @@ CREATE TABLE events (
 );
 
 INSERT INTO users (username, chat_id) VALUES
-('HitrayaPechenka', '12345'),
-('SomeoneElse', '67890');
+('HitrayaPechenka', '12345')
