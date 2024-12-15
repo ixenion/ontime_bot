@@ -1,6 +1,6 @@
 -- Создание таблицы пользователей
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,  -- SERIAL автоматически устанавливает id
+    id SERIAL PRIMARY KEY AUTO_INCREMENT,
     -- Если пользователь указал имя пользователя в своем профиле,
     -- его можно сохранить для удобства.
     username VARCHAR(255) UNIQUE NOT NULL,
@@ -12,18 +12,22 @@ CREATE TABLE users (
 
 --Cоздание таблицы самих событий для отправки
 CREATE TABLE events (
-    event_id SERIAL PRIMARY KEY,
+    event_id SERIAL PRIMARY KEY AUTO_INCREMENT,
     -- Ссылка на пользователя, который отправил событие
-    user_id INTEGER,
-    -- Время для отправки события с усановленным часовым поясом
-    event_time TIMESTAMP WITH TIME ZONE,
+    user_id BIGINT,
+    -- Время для отправки события
+    event_time TIMESTAMP,
     -- Текст сообщения для отправки
     message TEXT,
      -- Флаг, показывающий, отправлено ли событие, по дефолту False(не отправлено)
     is_sent BOOLEAN DEFAULT FALSE,
-    -- Время создания события, дефолтно во время создания
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    -- Время создания события
+    created_at TIMESTAMP,
     -- Флаг, показывающий, удалено ли событие, по дефолту False(не удалено)
     is_deleted BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+INSERT INTO users (username, chat_id) VALUES
+('HitrayaPechenka', '12345'),
+('SomeoneElse', '67890');
